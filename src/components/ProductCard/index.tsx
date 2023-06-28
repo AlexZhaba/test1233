@@ -35,10 +35,10 @@ export const ProductCard: React.FC<ProductProps> = ({ product }) => {
     dispatch(
       cartSlice.actions.addCartItem({
         id: product.id,
-        title: product.title,
+        title: product.name,
         quantity,
         price: product.price,
-        image: product.image,
+        image: product.images[0].photo,
       })
     );
   };
@@ -48,17 +48,13 @@ export const ProductCard: React.FC<ProductProps> = ({ product }) => {
       <div className={styles.photos}>
         <div>
           {[...Array(4)].map((_, i) => (
-            <img
-              key={i}
-              src={`../src/assets/${product.image}`}
-              alt={product.title}
-            />
+            <img key={i} src={product.images[0].photo} alt={product.name} />
           ))}
         </div>
-        <img src={`../src/assets/${product.image}`} alt={product.title} />
+        <img src={product.images[0].photo} alt={product.name} />
       </div>
       <div className={styles.description}>
-        <h3>{product.title}</h3>
+        <h3>{product.name}</h3>
         <span className={styles.price}>$ {product.price},00</span>
         <div className={styles.reviews}>
           <Rating reviews={product.reviews} />
@@ -104,15 +100,11 @@ export const ProductCard: React.FC<ProductProps> = ({ product }) => {
             <TwitterIcon />
           </div>
         </div>
-        <div className={styles.type}>
-          <span>SKU:</span>
-          <p>{product.sku}</p>
-        </div>
-        <div className={styles.type}>
-          <span>Categories:</span>
-          <div className={styles.categories}>
-            <p>{product.categories.join(", ")}</p>
-          </div>
+      </div>
+      <div className={styles.type}>
+        <span>Category:</span>
+        <div className={styles.categories}>
+          <p>{product.category.name}</p>
         </div>
       </div>
     </section>

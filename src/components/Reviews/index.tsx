@@ -20,10 +20,11 @@ export const Reviews: React.FC<ReviewsProps> = ({
           <div key={index} className={styles.review}>
             <div className={styles.title}>
               <h3>{review.title}</h3>
-              <p>{review.date}</p>
+              {/* <p>{review.date}</p> */}
+              <p>sometime</p>
             </div>
-            <Rating rating={review.rating} />
-            <p className={styles.description}>{review.description}</p>
+            <Rating reviews={reviews} />
+            <p className={styles.description}>{review.text}</p>
           </div>
         ))}
       </div>
