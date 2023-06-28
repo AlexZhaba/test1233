@@ -1,16 +1,20 @@
 /* eslint-disable no-prototype-builtins */
 import { useEffect, useState } from "react";
-import { useTypedSelector } from "../../hooks/redux";
-import { FilterParams, Product } from "./types";
+import { useTypedDispatch, useTypedSelector } from "../../hooks/redux";
+import { FilterParams } from "./types";
+import type { Product } from "../../store/reducers/ProductSlice";
 
 import styles from "./Shop.module.scss";
 
 import { Filters } from "../../components/Filters";
 import { Latest } from "../../components/Latest";
 import { Page } from "../../components/templates/Page";
+import { fetchProducts } from "../../store/reducers/ProductSlice";
 
 export const Shop: React.FC = () => {
   const { products } = useTypedSelector((state) => state.productReducer);
+  const dispatch = useTypedDispatch();
+
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([
     ...products,
   ]);
@@ -50,11 +54,15 @@ export const Shop: React.FC = () => {
   };
 
   useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  useEffect(() => {
     setFilteredProducts([...products]);
 
     setFilteredProducts((items) =>
       items.filter((item: Product) =>
-        item.title.toLowerCase().includes(filterParams.search.toLowerCase())
+        item.name.toLowerCase().includes(filterParams.search.toLowerCase())
       )
     );
 
@@ -67,12 +75,6 @@ export const Shop: React.FC = () => {
     if (!filterParams.stock) {
       setFilteredProducts((items) =>
         items.filter((item: Product) => !item.hasOwnProperty("soldout"))
-      );
-    }
-
-    if (filterParams.material) {
-      setFilteredProducts((items) =>
-        items.filter((item: Product) => item.material === filterParams.material)
       );
     }
 

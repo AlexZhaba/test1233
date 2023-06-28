@@ -1,13 +1,20 @@
 import { useParams } from "react-router-dom";
 import { ProductCard } from "../../components/ProductCard";
-import { useTypedSelector } from "../../hooks/redux";
+import { useTypedDispatch, useTypedSelector } from "../../hooks/redux";
 import { Page } from "../../components/templates/Page";
 import { ProductAdditional } from "../../components/ProductAdditional";
-import { Similar } from "../../components/Similar";
 import { Error } from "../Error";
+import { useEffect } from "react";
+import { fetchProductById } from "../../store/reducers/ProductSlice";
 
 export const Product: React.FC = () => {
+  const dispatch = useTypedDispatch();
   const { shopId } = useParams();
+
+  useEffect(() => {
+    if (!shopId) return;
+    dispatch(fetchProductById(Number(shopId)));
+  }, [dispatch, shopId]);
 
   const product = useTypedSelector(
     (state) => state.productReducer.products
@@ -21,15 +28,11 @@ export const Product: React.FC = () => {
     <Page>
       <ProductCard product={product} />
       <ProductAdditional
-        title={product.title}
-        shortDesc={product.description}
-        weight={product.weight}
-        dimensions={product.dimensions}
-        colors={product.colors}
-        material={product.material}
+        title={product.name}
+        shortDesc={product.short_description}
         reviews={product.reviews}
+        specification={product.specification}
       />
-      <Similar />
     </Page>
   );
 };

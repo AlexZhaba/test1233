@@ -13,11 +13,11 @@ export const Latest: React.FC<LatestProps> = ({ items }) => {
         <Card
           key={item.id}
           shopId={item.id}
-          title={item.title}
+          title={item.name}
           price={item.price}
-          image={item.image}
-          discount={item.discount}
-          soldout={item.soldout}
+          imagePath={item.images[0].photo}
+          discount={"0"}
+          soldout={false}
         />
       )),
     [items]

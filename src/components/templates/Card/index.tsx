@@ -8,13 +8,13 @@ export const Card: React.FC<CardProps> = ({
   shopId,
   title,
   price,
-  image,
+  imagePath,
   discount,
   soldout,
 }) => {
   return (
     <Link to={soldout ? "/shop" : `/shop/${shopId}`} className={styles.card}>
-      <img src={`/src/assets/${image}`} alt={title} />
+      <img src={imagePath} alt={title} />
       {discount && <span className={styles.discount}>{discount}</span>}
       {soldout && <span className={styles.soldout}>Sold out</span>}
       <p>{title}</p>

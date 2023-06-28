@@ -1,12 +1,6 @@
 import { ComponentProps } from "react";
+import { Product } from "../../store/reducers/ProductSlice";
 
 export interface LatestProps extends ComponentProps<"div"> {
-  items: {
-    id: number;
-    title: string;
-    price: number;
-    image: string;
-    discount?: string;
-    soldout?: boolean;
-  }[];
+  items: Product[];
 }

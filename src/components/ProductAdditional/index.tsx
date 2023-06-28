@@ -5,17 +5,14 @@ import { ProductAdditionalProps } from "./types";
 
 import styles from "./ProductAdditional.module.scss";
 
-import { Features } from "../Features";
 import { Reviews } from "../Reviews";
+import { Features } from "../Features";
 
 export const ProductAdditional: React.FC<ProductAdditionalProps> = ({
   title,
   shortDesc,
-  weight,
-  dimensions,
-  colors,
-  material,
   reviews,
+  specification,
 }) => {
   const [activeSection, setActiveSection] = useState("description");
 
@@ -49,13 +46,7 @@ export const ProductAdditional: React.FC<ProductAdditionalProps> = ({
         <p className={cn(styles.section, styles.description)}>{shortDesc}</p>
       )}
       {activeSection === "additional" && (
-        <Features
-          className={styles.section}
-          weight={weight}
-          dimensions={dimensions}
-          colors={colors}
-          material={material}
-        />
+        <Features className={styles.section} specification={specification} />
       )}
       {activeSection === "reviews" && (
         <Reviews className={styles.section} reviews={reviews} title={title} />
